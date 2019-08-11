@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>BowlingGame - ScoreCard</title>
+
+<link rel="stylesheet"
+	th:href="@{../webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">BowlingGame - ScoreCard</a>
+    </nav>
+	
+	<main role="main" class="container">
+
+	<div class="starter-template">
+		<form th:object="${game}" action="#" th:action="@{/dropPins}">
+			<br/><br/><br/><br/>
+			<table>			
+			<tr><td>
+			<table border="1">
+			  <thead><tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>Total Score</td></tr></thead>
+			<tbody>
+			<div th:each="player: ${game.lanes}">
+			<tr>
+				<div th:each="frame: ${player.frames}">
+					<td width="50">
+					<table>
+					<tr>
+					<div th:each="score: ${frame.scores}">
+					<td th:text="${score}"></td>
+					</div>
+					</tr>
+					<tr>
+					<td th:text="${frame.calculatedScore}"></td>
+					</tr>
+					</table>
+					</td>
+				</div>
+				<td th:text="${player.laneTotalScore}"></td>
+			<tr>
+			</div>
+			</tbody>
+			</table>
+			</td><td></td></tr><tr><td>
+			<div>
+			 	<table>
+			 	<tr><td>Current Player</td><td th:text="${game.currentPlayer}+1"></td></tr> 
+				<tr><td>Current Frame</td><td th:text="${game.currentFrame}+1"></td></tr>
+				<tr><td>Current Throw</td><td th:text="${game.currentThrow}+1"></td></tr>
+				<tr><td>Pins Dropped</td><td><select name="pinsDropped">
+    					<option th:each="i : ${#numbers.sequence(0, 10)}" th:value="${i}" th:text="${i}">
+    					</option>
+						</select></td></tr>
+				<tr th:object="${error_message}"><td th:text="${error_message}" style="color: #ff0000;"></td></tr>		
+				<tr><td><input type="submit" value="submit" /></td></tr>		
+				</table>
+			</div>
+			</td></tr>
+			</table>
+		</form>
+		<form action="#" th:action="@{/resetGame}">
+			<input type="submit" value="reset"/>
+		</form>
+	</div>
+	</main>
+	<!-- /.container -->
+	<script type="text/javascript"
+		th:src="@{../webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+</body>
+</html>
